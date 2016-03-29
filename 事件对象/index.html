@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+<style>
+	.da{
+		width:200px;
+		height:200px;
+		border: 1px solid red;
+		float:left;
+	}
+	.selected{
+		background: yellow;
+	}
+</style>
+
+
+
+</head>
+<body>
+<div class="da"></div>
+<div class="da" style="width:400px"></div>
+<div class="da"></div>
+<div class="da" style="height:400px"></div>
+<div class="da"></div>
+
+</body>
+<script>
+	// var el=document.getElementById("da");
+	// el.onmouseover=function(e){
+	// 	console.log("mouseover",e)
+	// }
+	// el.onmousedown=function(e){
+	// 	console.log("mousedown",e)
+	// }
+	// el.onmouseup=function(e){
+	// 	console.log("mouseup",e)
+	// }
+	// el.mouseout=function(e){
+	// 	console.log("mouseout",e)
+	// }
+	// el.onclick=function(e){
+	// 	console.log("click",e)
+	// }
+	// el.ondblclick=function(e){
+	// 	console.log("dblclick",e)
+	// }
+
+	//一个div点击变色
+	// var el=document.getElementById("da");
+	// el.onclick=(function(){
+	//	var kaiguan=true;
+	// 	return function(e){
+	// 			
+	// 		if(e.shiftKey&&e.ctrlKey&&e.altKey){
+	// 			this.className=kaiguan?"da selected":"da";
+	// 			kaiguan=!kaiguan;
+	// 			}
+	// 		}
+	// 	})()						
+ 
+
+    // 函数在定义的时候
+    // 会记录下自己可见范围内的所有变量
+    // 形成一个链条，叫做函数的作用链
+    // 函数调用时，如果在函数内部有对变量的引用
+    // 函数会自己的作用域链中由近及远的去寻找这个变量
+
+    //匿名函数是一个单独的函数
+
+
+//多个div点击变色
+var els=document.getElementsByClassName("da");
+for(var i=0;i<els.length;i++){
+	els[i].onclick=(function(){
+		var kaiguan=true;
+		return function(e){
+			if(e.shiftKey&&e.ctrlKey&&e.altKey){
+				// this.className=kaiguan?"da selected":"da";
+				// if(kaiguan===false){
+				// 	this.style.position="static"
+				// }
+				// kaiguan=!kaiguan;
+				if(kaiguan){
+				var r=Math.floor(Math.random()*255);
+				var g=Math.floor(Math.random()*255);
+				var b=Math.floor(Math.random()*255);
+				this.style.backgroundColor="rgb("+r+","+g+","+b+")";
+				this.classList.add("selected")				
+				kaiguan=false;
+			}else{
+				this.className="da";
+				this.style.backgroundColor="transparent";
+				kaiguan=true;
+				this.style.position="static"
+			}			
+			}
+			
+		}
+				
+	})()
+}
+
+document.ondblclick=function(e){
+	var ss=document.getElementsByClassName("selected");
+	// alert("ss")
+	if(ss.length===0){
+		alert("请选择色块")
+	}else{
+		for(var i=0;i<ss.length;i++){
+			ss[i].style.position="absolute";
+			ss[i].style.left=e.clientX-ss[i].offsetWidth/2+"px";
+			ss[i].style.top=e.clientY-ss[i].offsetHeight/2+"px";
+		}
+	}
+
+}
+
+
+	document.onmousedown=function(e){
+		document.onmouseup=function(ev){
+			var offX=ev.clientX-e.clientX;
+			var offY=ev.clientY-e.clientY;
+			var els=document.getElementsByClassName("selected");
+			for(var i=0;i<els.length;i++){
+				els[i].style.top=els[i].offsetTop+offY+"px";
+				els[i].style.left=els[i].offsetLeft+offX+"px";
+		}
+	}
+}
+
+
+</script>
+</html>

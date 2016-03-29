@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+<style type="text/css">
+	.da{
+		width: 100px;
+		height: 100px;
+		border: 1px solid red;
+		float:left;
+	}
+	.selected{
+		background: yellow;
+	}
+	.yd{
+		width: 50px;
+		height: 50px;
+		background: blue;
+	}
+</style>
+
+</head>
+<body>
+<div class="yd"></div>
+<div class="da"></div>
+<div class="da"></div>
+<div class="da"></div>	
+<div class="da"></div>
+<div class="da"></div>
+</body>
+<script type="text/javascript">
+	var els=document.getElementsByClassName("da");
+	for(var i=0;i<els.length;i++){
+		els[i].onclick=(function(){
+			var kaiguan=true;
+			return function(e){
+				if(e.ctrlKey){
+					if(kaiguan){
+						var r=Math.floor(Math.random()*255);
+						var g=Math.floor(Math.random()*255);
+						var b=Math.floor(Math.random()*255);
+						this.style.backgroundColor="rgb("+r+","+g+","+b+")";
+						this.classList.add("selected")
+						kaiguan=false;
+					}else{
+						this.className="da";
+						this.style.backgroundColor="transparent";
+						kaiguan=true;
+						this.style.position="static";
+					}
+				}
+			}
+		})()
+	}
+	
+	document.ondblclick=function(e){
+		var ss=document.getElementsByClassName("selected");
+		if(ss.length===0){
+			alert("请选择色块")
+		}else{
+			for(var i=0;i<ss.length;i++){
+				ss[i].style.position="absolute";
+				ss[i].style.left=e.clientX-ss[i].offsetWidth/2+"px";
+				ss[i].style.top=e.clientY-ss[i].offsetHeight/2+"px";
+			}
+		}
+	}
+
+
+
+// 	document.onmousedown=function(e){
+// 		document.onmouseup=function(ev){
+// 			var offX=ev.clientX-e.clientX;
+// 			var offY=ev.clientY-e.clientY;
+// 			var els=document.getElementsByClassName("selected");
+// 			for(var i=0;i<els.length;i++){
+// 				els[i].style.top=els[i].offsetTop+offY+"px";
+// 				els[i].style.left=els[i].offsetLeft+offX+"px";
+// 		}
+// 	}
+// }
+var zh=document.getElementsByClassName("yd")[0];
+
+
+        	addEvent(zh,"mousedown",downFn);
+        	function downFn(e){
+                var ev=e||window.event;
+                var oX=ev.offsetX||ev.layerX;
+                var oY=ev.offsetY||ev.layerY;
+        		addEvent(document,"mousemove",moveFn);
+        		function moveFn(e){
+        			var ev=e||window.event;
+        			var cX=ev.clientX;
+        			var cY=ev.clientY;
+        			var els=document.getElementsByClassName("selected");
+        			zh.style.left=cX-oX+"px";
+        			zh.style.top=cY-oY+"px";
+        			for(var i=0;i<els.length;i++){
+        				els[i].style.left=cX-oX-zh.offsetWidth/2+"px";
+        				els[i].style.top=cY-oY-zh.offsetHeight/2+"px";
+        			}
+        		}
+        	
+                addEvent(document,"mouseup",upFn);
+                function upFn(){
+                	removeEvent(zh,"mousedown",downFn);
+                	removeEvent(document,"mousemove",moveFn);
+                }
+        	}
+
+
+</script>
+</html>

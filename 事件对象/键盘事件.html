@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+<style type="text/css">
+	.box{
+		width:600px;
+		height:600px;
+		border:1px solid red;
+	}
+	.zi{
+		width:20px;
+		height:20px;
+		background: yellow; 
+		display:inline-block;
+		padding:10px 20px;
+		position: absolute;
+		margin-left: 50px;
+	}
+</style>
+
+</head>
+<body>
+	<div class="box">
+<!-- 		<div class="zi"></div> -->
+	</div>
+</body>
+<script type="text/javascript">
+/*	document.onkeydown=function(e){
+		console.log("down",e)
+	}
+	document.onkeyup=function(e){
+		console.log("up",e)
+	}
+	document.onkeypress=function(e){
+		console.log("press")
+	}*/
+	// for(var i=10000;i<12000;i++){
+	// 	console.log(i,String.fromCharCode(i))
+	// }
+	// var obj={};
+	// for(var i=1000;i<100100;i++){
+	// 	obj[i]=String.fromCharCode(i);
+		
+	// }
+	// console.log(JSON.stringify(obj));
+
+
+// var box=document.querySelector(".box")
+// document.onKeyup=function(e){
+// 	var key=String.fromCharCode(e.keyCode).tolowerCase();
+// 	if(key==="a"){
+// 		box.removeChild(box.firstElementChild);
+// 		var el=document.creatlement("div");
+// 		el.c
+// 	}
+// }
+
+var box=document.querySelector(".box")
+var zimujihe={}
+var shuliang=5;
+
+var createzimu=function(){
+	do{
+		var zimu=String.fromCharCode(Math.floor(Math.random()*26+97));
+	}while(zimujihe[zimu]);	
+	var el=document.createElement("div");
+	el.className="zi";
+	el.innerHTML=zimu;
+	box.appendChild(el);
+	el.style.left=Math.floor(Math.random()*(box.offsetWidth-el.offsetWidth))+"px";
+	zimujihe[zimu]=el;	
+}
+removezimu=function(zimu){
+	var el= zimujihe[zimu];
+	el.parentElement.removeChild(el);
+	delete zimujihe[zimu];
+	console.log(zimujihe);
+ 
+} 
+
+createzimu()
+
+
+
+document.onkeyup=function(e){
+	var key=String.fromCharCode(e.keyCode).toLowerCase();
+	//alert(key)
+	if(zimujihe[key]){
+		removezimu(key);
+		createzimu();
+	}
+}
+
+
+
+// var diao();
+diao=function(){
+	var zimu;
+	for(var i in zimujihe){
+		var el=zimujihe[i];
+		el.style.top=el.offsetTop+2+"px";
+		if(el.offsetTop>box.offsetHeight){
+		zimu=i;	
+		}
+	}
+	if(zimu){
+		removezimu(zimu);
+		createzimu();
+	}
+}
+
+// var timerId=setInterVale
+setInterval(diao,20)
+
+
+</script>
+</html>
