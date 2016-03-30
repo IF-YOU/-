@@ -2,28 +2,33 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>键盘事件</title>
 <style type="text/css">
 	.box{
-		width:600px;
-		height:600px;
-		border:1px solid red;
+		width:550px;
+		height:550px;
+		/*border:1px solid red;*/
+		background:url(./image/2.jpg);
 	}
 	.zi{
-		width:20px;
-		height:20px;
-		background: yellow; 
-		display:inline-block;
-		padding:10px 20px;
-		position: absolute;
-		margin-left: 50px;
+		 position: absolute;
+         float: left;
+       	 width: 50px;
+       	 height: 50px;
+       	 /*border:1px solid;*/
+       	 background: yellow;
+       	 text-align: center;
+       	 line-height: 40px;
+       	 font-size: 25px;
+         border-radius: 50%;
+         color:white;
 	}
 </style>
 
 </head>
 <body>
 	<div class="box">
-<!-- 		<div class="zi"></div> -->
+
 	</div>
 </body>
 <script type="text/javascript">
@@ -69,24 +74,37 @@ var createzimu=function(){
 	el.className="zi";
 	el.innerHTML=zimu;
 	box.appendChild(el);
-	el.style.left=Math.floor(Math.random()*(box.offsetWidth-el.offsetWidth))+"px";
+	el.style.left=Math.floor(Math.random()*(box.offsetWidth-el.offsetWidth)+8)+"px";
+	console.log(el.style.left)
+	var r=Math.floor(Math.random()*256);
+	var g=Math.floor(Math.random()*256);
+	var b=Math.floor(Math.random()*256);
+	el.style.background="rgb("+r+","+g+","+b+")";
+	// var ran=Math.ceil(Math.random()*5);
+	// zimujihe[zimu]={top:0,yuansu:el,off:ran};
 	zimujihe[zimu]=el;	
 }
-removezimu=function(zimu){
+
+for(var i=0;i<shuliang;i++){
+	createzimu();
+}
+var removezimu=function(zimu){
 	var el= zimujihe[zimu];
 	el.parentElement.removeChild(el);
 	delete zimujihe[zimu];
-	console.log(zimujihe);
  
 } 
 
-createzimu()
 
 
 
 document.onkeyup=function(e){
+
+	 if(e.keyCode===32){
+            flag();
+            return;
+          }
 	var key=String.fromCharCode(e.keyCode).toLowerCase();
-	//alert(key)
 	if(zimujihe[key]){
 		removezimu(key);
 		createzimu();
@@ -95,7 +113,6 @@ document.onkeyup=function(e){
 
 
 
-// var diao();
 diao=function(){
 	var zimu;
 	for(var i in zimujihe){
@@ -111,9 +128,16 @@ diao=function(){
 	}
 }
 
-// var timerId=setInterVale
-setInterval(diao,20)
 
+var timerId=setInterval(diao,50);
+        var flag=function(){
+          if(timerId){
+               clearInterval(timerId);
+               timerId=null;
+          }else{
+            timerId=setInterval(diao,100);
+          }
+        }
 
 </script>
 </html>
