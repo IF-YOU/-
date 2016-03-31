@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>事件委托</title>
+<style type="text/css">
+	.feeds{
+		width:400px;
+		height:600px;
+		border:1px solid black;
+		position:absolute;
+		left:50%;
+		top:50%;
+		margin-left:-200px;
+		margin-top:-250px;
+		overflow:auto;
+		padding:30px;
+	}
+	.feed{
+		padding:30px;
+		border:1px solid black;
+		margin-bottom:10px;
+	}
+	.news{
+		padding:10px;
+		border:1px solid black;		
+		text-align:center;
+		margin:5px auto;
+	}
+    .zan{
+        display: inline-block;
+        color:black;
+    }
+    .zaned{
+    	 display: inline-block;
+    	 color:red;
+    }
+</style>
+</head>
+<body>
+	 <div class="news">有5条新微博</div>
+	 <div class="feeds">
+	 	<div class="feed">
+	 		<span>郭雯</span>
+	 		<p>我要长高，我要变瘦</p>
+	 		<span class="zan">赞(66)</span>
+	 	</div>
+	 	<div class="feed">
+	 		<span>董小敏</span>
+	 		<p>今天心情不错</p>
+	 		<span class="zan">赞(88)</span>
+	 	</div>
+	 	<div class="feed">
+	 		<span>邓佳艳</span>
+	 		<p>今天吃什么，不要说随便，不要说不知道</p>
+	 		<span class="zan">赞(99)</span>
+	 	</div>
+	 </div>
+</body>
+<script>
+	var feeds=document.querySelector(".feeds");
+	var feed=document.querySelector(".feed");
+    var news=document.querySelector(".news");
+    var zans=document.querySelectorAll(".zan");
+    var arr=[{user:"黎离",neirong:"裴尚轩，今年我不要再喜欢你了。",zan:"870"},
+             {user:"孙悦伟",neirong:"我是最帅的",zan:"89"},
+             {user:"薇薇",neirong:"一只美梦泽",zan:"98"},
+             {user:"北辰",neirong:"等我发工资了我包养你们啊",zan:"134"},
+             {user:"思思",neirong:"撒比欣欣，你是猪嘛",zan:"125"}]
+    for(var i=0;i<zans.length;i++){
+    	zans[i].onclick=(function(){
+    		var flag=true;
+              return function(){
+              	if(flag){
+              		this.classList.add("zaned");
+              		var a=parseInt(this.innerHTML.slice(2).slice(0,-1))+1
+              		this.innerHTML="赞("+a+")"
+              		flag=false;
+              	}else{
+              		this.classList.remove("zaned");
+              		var a=parseInt(this.innerHTML.slice(2).slice(0,-1))-1
+              		this.innerHTML="赞("+a+")"
+              		flag=true;              	
+              	}
+              }
+    	})()
+
+    }
+    news.onclick=function(){
+    	for(var i=0,el ;i<5;i++){
+    		var date=arr[i]
+    		el=document.createElement("div");
+    		el.classList.add("feed");
+
+    		el.innerHTML="<span>"+date.user+"</span>"+
+    			 		"<p>"+date.neirong+"</p>"+
+    			 		"<span class='zan'>"+"赞("+date.zan+")</span>"
+    		feeds.insertBefore(el,feeds.firstElementChild);
+             
+    	}
+    }
+</script>
+</html>

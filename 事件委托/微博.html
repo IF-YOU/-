@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>微博</title>
+<style>
+	.container{
+		width:320px;
+		position:relative;
+		left:50%;
+		margin-left:-160px;
+		background:url(1.jpg);
+	}
+	.tip{
+		padding:10px;
+		border:1px solid black;		
+		text-align:center;
+		margin:5px auto;
+	}
+	textarea{
+		width:314px;
+		outline:none;
+	}
+	.feeds{
+		width:298px;
+		height:400px;
+		border:1px solid black;
+		overflow:auto;
+		padding:10px;
+	}
+	.feed{
+		padding:20px;
+		border:1px solid black;
+		margin-bottom:10px;
+	}
+	.loading{
+		width:320px;
+		height:50px;
+		position:absolute;
+		top:200px;
+		text-align:center;
+	}
+	input{
+		width:80px;
+		display:inline-block;
+		color:#999;
+		background:#666;
+		padding:5px;
+		font-size:15px;
+	}
+	.zan{
+        display: inline-block;
+        color:black;
+    }
+    .zaned{
+    	 display: inline-block;
+    	 color:red;
+    }
+</style>
+</head>
+<body>
+	<div class="container">
+		<div class="tip">有5条新微博</div>
+		<textarea type="" name="weibo" value=""></textarea>
+		<p>你还可以输入140字</p>
+		<input type="button" name="btn" value="发布">		
+		<div class="feeds"></div>
+		<div class="loading">加载中.......</div>
+	</div>
+</body>
+<script>
+    //加载跳转
+	var feeds=document.querySelector(".feeds");
+	var loading=document.querySelector(".loading");
+	var date=[{user:"黎离",neirong:"裴尚轩，今年我不要再喜欢你了。",zan:"870"},
+	          {user:"孙悦伟",neirong:"我是最帅的",zan:"89"}]
+	setTimeout(function(){
+		loading.style.display="none";
+		for(var i=0,el;i<date.length;i++){
+			el=document.createElement("div");
+			el.classList.add("feed");
+			el.innerHTML="<span>"+date[i].user+"</span>"+"<p>"+date[i].neirong+"</p>"+"<span class='zan'>"+"赞("+date[i].zan+")</span>"
+    		feeds.insertBefore(el,feeds.firstElementChild);
+		}
+	},1000)
+
+	
+	//刷新
+    var tip=document.querySelector(".tip");
+    tip.onclick=function(){
+    	var arr=[{user:"黎离",neirong:"裴尚轩，今年我不要再喜欢你了。",zan:"870"},
+	             {user:"黎离",neirong:"裴尚轩，今年我不要再喜欢你了。",zan:"870"},
+	             {user:"黎离",neirong:"裴尚轩，今年我不要再喜欢你了。",zan:"870"},
+	             {user:"黎离",neirong:"裴尚轩，今年我不要再喜欢你了。",zan:"870"},
+	             {user:"黎离",neirong:"裴尚轩，今年我不要再喜欢你了。",zan:"870"}];
+    	for(var i=0;i<5;i++){
+    		news=document.createElement("div");
+			news.classList.add("feed");
+			news.innerHTML="<span>"+arr[i].user+"</span>"+"<p>"+arr[i].neirong+"</p>"+"<span class='zan'>"+"赞("+arr[i].zan+")</span>"
+    		feeds.insertBefore(news,feeds.firstElementChild);
+    	}
+    }
+
+
+    //点赞
+    var zan=document.querySelectorAll(".zan");
+    feeds.onclick=function(e){
+    	var el=e.target;
+    	if(el.classList.contains('zan')){
+    		var shu=parseInt(el.innerHTML.slice(2,-1));
+    		var num=shu+1;
+    		el.innerHTML="赞("+num+")";
+    		el.classList.add("zaned");
+    		el.classList.toggle("zan");
+    	}
+    	else{
+    		var shu=parseInt(el.innerHTML.slice(2,-1));
+    		var num=shu-1;
+    		el.innerHTML="赞("+num+")";
+    		el.classList.remove("zaned");
+    		el.classList.toggle("zan");
+    	}
+    }
+
+
+</script>
+</html>

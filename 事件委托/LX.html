@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+<style type="text/css">
+	.da{
+		width:500px;
+		height:500px;
+		background:#ECEBEB;
+		border:1px solid black;
+	}
+	.xiao{
+		width:80px;
+		height:80px;
+		border:2px solid #BD3C8F;
+		background:#EC68CA;
+		padding:5px;
+		margin:3px;
+		float:left;
+	}
+	span{
+		border:1px solid white;
+		color:white;
+		display:inline-block;
+		margin:2px;
+		padding:2px;
+	}
+</style>
+
+</head>
+<body>
+	<div class="da">
+		<div class="xiao">
+			<span class="zan">赞</span>
+			<span class="cai">踩</span>
+			<span class="pinglun">评</span>
+			<span class="jubao">举</span>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	var da=document.querySelector(".da");
+	var xiao=document.querySelector(".xiao");
+	var spans=document.querySelectorAll("span")
+	document.ondblclick=function(){
+		el=document.createElement("div")
+		el.classList.add("xiao")
+		el.innerHTML="<span class='zan'>赞</span><span class='cai'>踩</span><span class='pinglun'>评</span><span class='jubao'>举</span>"
+		da.appendChild(el)
+	}
+	var zanhandel=function(){
+		this.style.color='red';
+		console.log('被赞')		
+	}
+	var caihandel=function(){
+		this.style.color='red';
+		console.log('被踩')		
+	}
+	var pinglunhandel=function(){
+		this.style.color='red';
+		console.log('被评论')		
+	}
+	var jubaohandel=function(){
+		this.style.color='red';
+		console.log('被举报')		
+	}
+	da.onclick=function(e){
+		var el=e.target;
+		if(el.classList.contains('zan')){
+			zanhandel.call(el,e)
+		}
+		else if(el.classList.contains('cai')){
+			caihandel.call(el,e)
+		}
+		else if(el.classList.contains('pinglun')){
+			pinglunhandel.call(el,e)
+		}
+		else if(el.classList.contains('jubao')){
+			jubaohandel.call(el,e)
+		}
+	}
+</script>
+</html>
